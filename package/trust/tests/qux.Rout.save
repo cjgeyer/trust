@@ -1,0 +1,103 @@
+
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.2.0  (2005-10-06 r35749)
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
+
+> 
+>  objfun <- function(x) {
++      stopifnot(is.numeric(x))
++      stopifnot(length(x) == 2)
++      f <- expression(5 * x1 + x1^2 - x2^2 + (1 / 100) * (x1^4 + x2^4))
++      g1 <- D(f, "x1")
++      g2 <- D(f, "x2")
++      h11 <- D(g1, "x1")
++      h12 <- D(g1, "x2")
++      h22 <- D(g2, "x2")
++      x1 <- x[1]
++      x2 <- x[2]
++      f <- eval(f)
++      g <- c(eval(g1), eval(g2))
++      B <- rbind(c(eval(h11), eval(h12)), c(eval(h12), eval(h22)))
++      list(value = f, gradient = g, hessian = B)
++  }
+> 
+>  library(trust)
+> 
+>  trust(objfun, c(0, 0), 1, 5, blather = TRUE)
+$value
+[1] -30.93159
+
+$gradient
+[1] 0.000000e+00 1.243450e-13
+
+$hessian
+         [,1] [,2]
+[1,] 2.616708    0
+[2,] 0.000000    4
+
+$argument
+[1] -2.266988  7.071068
+
+$converged
+[1] TRUE
+
+$argpath
+           [,1]     [,2]
+ [1,]  0.000000 0.000000
+ [2,] -1.000000 0.000000
+ [3,] -1.718447 1.281553
+ [4,] -2.003075 5.271414
+ [5,] -2.003075 5.271414
+ [6,] -2.139835 6.513916
+ [7,] -2.268649 7.151787
+ [8,] -2.266989 7.072414
+ [9,] -2.266988 7.071068
+
+$argtry
+           [,1]     [,2]
+ [1,] -1.000000 0.000000
+ [2,] -1.718447 1.281553
+ [3,] -2.003075 5.271414
+ [4,] -2.274031 8.780936
+ [5,] -2.139835 6.513916
+ [6,] -2.268649 7.151787
+ [7,] -2.266989 7.072414
+ [8,] -2.266988 7.071068
+ [9,] -2.266988 7.071068
+
+$steptype
+[1] "hard-easy" "hard-hard" "easy-easy" "Newton"    "easy-easy" "Newton"   
+[7] "Newton"    "Newton"    "Newton"   
+
+$accept
+[1]  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+
+$r
+[1] 1.00 2.00 4.00 5.00 1.25 2.50 2.50 2.50 2.50
+
+$rho
+[1]  0.9975000  0.9861968  0.7639186 -0.2796094  0.9117936  0.8931523  1.0109417
+[8]  1.0001903  0.9981416
+
+$valpath
+[1]   0.000000  -3.990000  -7.167374 -25.908265 -23.584804 -30.337737 -30.918404
+[8] -30.931584 -30.931588
+
+$preddiff
+[1] -4.000000e+00 -3.221846e+00 -2.453258e+01 -8.309665e+00 -4.857976e+00
+[6] -6.501326e-01 -1.303771e-02 -3.625140e-06 -2.954243e-13
+
+> 
+> 

@@ -1,0 +1,259 @@
+
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.2.0 beta (2005-09-26 r35681)
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
+
+> 
+>  library(trust)
+> 
+>  ##### four-way contingency table with all two-way interactions
+> 
+>  d <- c(3, 4, 5, 6)
+>  n <- 1000
+> 
+>  ##### model matrix
+>  m <- NULL
+>  for (i in 1:d[1]) {
++      for (j in 1:d[2]) {
++          mfoo <- array(0, dim = d)
++          mfoo[i, j, , ] <- 1
++          mfoo <- as.vector(mfoo)
++          m <- cbind(m, mfoo)
++      }
++  }
+>  for (i in 1:d[1]) {
++      for (j in 1:d[3]) {
++          mfoo <- array(0, dim = d)
++          mfoo[i, , j, ] <- 1
++          mfoo <- as.vector(mfoo)
++          m <- cbind(m, mfoo)
++      }
++  }
+>  for (i in 1:d[1]) {
++      for (j in 1:d[4]) {
++          mfoo <- array(0, dim = d)
++          mfoo[i, , , j] <- 1
++          mfoo <- as.vector(mfoo)
++          m <- cbind(m, mfoo)
++      }
++  }
+>  for (i in 1:d[2]) {
++      for (j in 1:d[3]) {
++          mfoo <- array(0, dim = d)
++          mfoo[ , i, j, ] <- 1
++          mfoo <- as.vector(mfoo)
++          m <- cbind(m, mfoo)
++      }
++  }
+>  for (i in 1:d[2]) {
++      for (j in 1:d[4]) {
++          mfoo <- array(0, dim = d)
++          mfoo[ , i, , j] <- 1
++          mfoo <- as.vector(mfoo)
++          m <- cbind(m, mfoo)
++      }
++  }
+>  for (i in 1:d[3]) {
++      for (j in 1:d[4]) {
++          mfoo <- array(0, dim = d)
++          mfoo[ , , i, j] <- 1
++          mfoo <- as.vector(mfoo)
++          m <- cbind(m, mfoo)
++      }
++  }
+>  dimnames(m) <- NULL
+>  foo <- qr(m)
+>  m <- m[ , foo$pivot[seq(1, foo$rank)]]
+> 
+>  ##### true parameter value
+>  set.seed(42)
+>  theta.true <- 0.25 * rnorm(ncol(m))
+>  theta.true <- round(theta.true, 5)
+> 
+>  ##### simulate data
+>  eta <- as.numeric(m %*% theta.true)
+>  p <- exp(eta)
+>  p <- p / sum(p)
+>  x <- sample(nrow(m), n, replace = TRUE, prob = p)
+Warning message:
+Walker's alias method used: results are different from R < 2.2.0 
+>  x <- tabulate(x, nbins = nrow(m))
+> 
+>  ##### save data
+>  options(error = dump.frames, show.error.messages = FALSE, warn = -1)
+>  iffy <- try(read.table("fred.txt"))
+>  options(error = NULL, show.error.messages = TRUE, warn = 0)
+>  if (inherits(iffy, "try-error")) {
++      data <- data.frame(x = x, m = m)
++      write.table(data, file = "fred.txt", row.names = FALSE)
++  }
+>  data <- read.table(file = "fred.txt", header = TRUE)
+>  x <- data$x
+>  data$x <- NULL
+>  m <- as.matrix(data)
+>  dimnames(m) <- NULL
+> 
+>  ##### log likelihood
+>  objfun <- function(theta) {
++      eta <- as.numeric(m %*% theta)
++      p <- exp(eta)
++      f <- sum(x * eta - p)
++      g <- as.numeric(t(x - p) %*% m)
++      B <- sweep(- m, 1, p, "*")
++      B <- t(m) %*% B
++      list(value = f, gradient = g, hessian = B)
++  }
+> 
+>  ##### check it
+>  sally <- objfun(theta.true)
+>  epsilon <- 1e-8
+>  mygrad <- double(length(theta.true))
+>  for (i in 1:length(mygrad)) {
++      theta.eps <- theta.true
++      theta.eps[i] <- theta.true[i] + epsilon
++      sally.eps <- objfun(theta.eps)
++      mygrad[i] <- (sally.eps$value - sally$value) / epsilon
++  }
+>  all.equal(sally$gradient, mygrad, tolerance = length(mygrad) * epsilon)
+[1] TRUE
+>  myhess <- matrix(NA, length(theta.true), length(theta.true))
+>  for (i in 1:length(mygrad)) {
++      theta.eps <- theta.true
++      theta.eps[i] <- theta.true[i] + epsilon
++      sally.eps <- objfun(theta.eps)
++      myhess[i, ] <- (sally.eps$gradient - sally$gradient) / epsilon
++  }
+>  all.equal(sally$hessian, myhess, tolerance = length(mygrad) * epsilon)
+[1] TRUE
+> 
+>  fred <- trust(objfun, theta.true, 1, sqrt(ncol(m)), blather = TRUE)
+>  fred$converged
+[1] FALSE
+>  length(fred$r)
+[1] 100
+>  data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
++      accept = fred$accept, r = fred$r)
+         type       rho     change accept        r
+1   easy-easy 0.9629598  -377.9983   TRUE 1.000000
+2   easy-easy 0.9508178  -974.5924   TRUE 2.000000
+3   easy-easy 0.9618299 -2173.9668   TRUE 4.000000
+4   easy-easy 0.9872496 -4381.3470   TRUE 8.000000
+5   easy-easy 0.9992885 -5041.1254   TRUE 9.273618
+6   easy-easy 0.9999380 -5040.1210   TRUE 9.273618
+7   easy-easy 0.9999897 -5040.2404   TRUE 9.273618
+8   easy-easy 0.9999975 -5040.2977   TRUE 9.273618
+9   easy-easy 0.9999993 -5040.3213   TRUE 9.273618
+10  easy-easy 0.9999997 -5040.3308   TRUE 9.273618
+11  easy-easy 0.9999999 -5040.3346   TRUE 9.273618
+12  easy-easy 1.0000000 -5040.3363   TRUE 9.273618
+13  easy-easy 1.0000000 -5040.3370   TRUE 9.273618
+14  easy-easy 1.0000000 -5040.3373   TRUE 9.273618
+15  easy-easy 1.0000000 -5040.3374   TRUE 9.273618
+16  easy-easy 1.0000000 -5040.3399   TRUE 9.273618
+17  easy-easy 1.0000000 -5040.3363   TRUE 9.273618
+18  easy-easy 1.0000000 -5040.3369   TRUE 9.273618
+19  easy-easy 1.0000000 -5040.3372   TRUE 9.273618
+20  easy-easy 1.0000000 -5040.3374   TRUE 9.273618
+21  easy-easy 1.0000000 -5040.3374   TRUE 9.273618
+22  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+23  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+24  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+25  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+26  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+27  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+28  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+29  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+30  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+31  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+32  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+33  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+34  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+35  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+36  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+37  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+38  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+39  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+40  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+41  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+42  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+43  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+44  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+45  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+46  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+47  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+48  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+49  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+50  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+51  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+52  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+53  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+54  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+55  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+56  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+57  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+58  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+59  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+60  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+61  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+62  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+63  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+64  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+65  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+66  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+67  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+68  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+69  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+70  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+71  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+72  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+73  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+74  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+75  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+76  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+77  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+78  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+79  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+80  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+81  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+82  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+83  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+84  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+85  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+86  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+87  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+88  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+89  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+90  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+91  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+92  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+93  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+94  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+95  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+96  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+97  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+98  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+99  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+100 easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+> 
+>  ##### note: FAILS to converge because function is unbounded below -- minimum
+>  #####     value does not exist
+>  #####
+>  ##### this is what happens when a luser forgets minimize = FALSE in a
+>  ##### maximization problem.
+>  #####
+>  ##### also it revealed a bug in trust (now fixed), where it used to
+>  ##### test whether fred(beta.up) == 0 before calling uniroot
+> 
+> 
