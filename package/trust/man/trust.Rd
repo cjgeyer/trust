@@ -18,7 +18,23 @@ trust(objfun, parinit, rinit, rmax, parscale,
     with components \code{value}, \code{gradient}, and \code{hessian}.
     Its first argument should be a vector of
     the length of \code{parinit} followed by any other arguments specified
-    by the \code{\dots} argument.}
+    by the \code{\dots} argument.
+
+    If the domain of the objective function is not the whole Euclidean space
+    of dimension \code{length(parinit)}, then \code{objfun} should return
+    \code{list(value = Inf)} when given a parameter value not in the domain
+    of the objective function and \code{minimize == TRUE}.  Similarly, it
+    should return \code{list(value = - Inf)} when given a parameter value
+    not in the domain and \code{minimize == FALSE}.  Conversely, when given
+    a parameter value in the domain, it must return a list with components
+    with components \code{value}, \code{gradient}, and \code{hessian}. that
+    are all finite and are the value, gradient, and Hessian of the objective
+    function at the given point.
+
+    \bold{Warning:} The feature of allowing infinite values to indicate
+    a restricted domain does not allow for true constrained optimization.
+    The algorithm will converge to solutions on the boundary very slowly.
+    (See details below.)}
   \item{parinit}{starting parameter values for the optimization.}
   \item{rinit}{starting trust region radius.  The trust region radius
     (see details below) is adjusted as the
@@ -78,12 +94,11 @@ trust(objfun, parinit, rinit, rmax, parscale,
   zero and Hessian is positive semidefinite) for a local minimum
   (Fletcher, 1987, Theorem 5.1.1; Nocedal and Wright, 1999, Theorem 4.8)
   if the level set of the objective function below the starting position
-  is bounded.  When Newton steps are safe (when they stay within
-  the trust region), the algorithm takes them.
-  Thus the trust region algorithm  converges at second order
-  (Fletcher, 1987, Theorem 3.1.1) if the Hessian of the objective function is
-  Lipschitz and the sequence of iterates are all Newton steps after some
-  point.
+  is bounded.  If the point to which the algorithm converges actually
+  satisfies the second order sufficient condition (Hessian is positive
+  definite and Lipschitz in a neighborhood of this point),
+  then the algorithm converges at second order
+  (Fletcher, 1987, Theorem 5.1.2).
 
   The algorithm is not designed for use on functions of thousands of variables
   or for functions for which derivatives are not available.  Use
@@ -94,6 +109,19 @@ trust(objfun, parinit, rinit, rmax, parscale,
   It is especially useful when function evaluations are expensive,
   since it makes the best possible use of each function, gradient,
   and Hessian evaluation.
+
+  The algorithm is not designed for constrained optimization.  It does
+  allow for a restricted domain, but does not converge efficiently to
+  solutions on the boundary of the domain.  The theorems mentioned above
+  assure rapid convergence to a local optimum (at least a point satisfying
+  the first and second order necessary conditions) if the level set of the
+  objective function below the starting position is bounded and is contained
+  in the interior of the domain of the objective function (that is, all
+  points on the boundary of the domain have higher objective function values
+  than the starting point).  The algorithm automatically adjusts the trust
+  region to keep accepted iterates in the interior of the domain.
+  This is one way it is safer than \code{\link{nlm}} or \code{\link{optim}},
+  which do not handle general restricted domains.
 }
 \value{
   A list containing the following components:
@@ -143,8 +171,8 @@ trust(objfun, parinit, rinit, rmax, parscale,
   \code{\link{deriv}} to calculate analytical derivatives.
 }
 \examples{
+##### Rosenbrock's function #####
 objfun <- function(x) {
-    ##### Rosenbrock's function #####
     stopifnot(is.numeric(x))
     stopifnot(length(x) == 2)
     f <- expression(100 * (x2 - x1^2)^2 + (1 - x1)^2)
@@ -162,6 +190,30 @@ objfun <- function(x) {
 }
 
 trust(objfun, c(3, 1), 1, 5)
+
+##### function with restricted domain #####
+d <- 5
+mu <- 100 * seq(1, d)
+objfun <- function(x) {
+    normxsq <- sum(x^2)
+    omnormxsq <- 1 - normxsq
+    if (normxsq >= 1) return(list(value = Inf))
+    f <- sum(x * mu) - log(omnormxsq)
+    g <- mu + 2 * x / omnormxsq
+    B <- 4 * outer(x, x) / omnormxsq^2 + 2 * diag(d) / omnormxsq
+    list(value = f, gradient = g, hessian = B)
+}
+
+whoop <- trust(objfun, rep(0, d), 1, 100, blather = TRUE)
+whoop$converged
+length(whoop$r)
+data.frame(type = whoop$steptype, rho = whoop$rho, change = whoop$preddiff,
+    accept = whoop$accept, r = whoop$r)
+
+##### solution
+whoop$argument
+##### distance of solution from boundary
+1 - sqrt(sum(whoop$argument^2))
 }
 \keyword{nonlinear}
 \keyword{optimize}

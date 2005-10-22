@@ -37,15 +37,16 @@ trust <- function(objfun, parinit, rinit, rmax, parscale,
        stop("parinit not numeric")
     if (! all(is.finite(parinit)))
        stop("parinit not all finite")
+    d <- length(parinit)
     if (missing(parscale)) {
         rescale <- FALSE
     } else {
         rescale <- TRUE
-        if (length(parscale) != length(parinit))
+        if (length(parscale) != d)
            stop("parscale and parinit not same length")
         if (! all(parscale > 0))
            stop("parscale not all positive")
-        if (all(is.finite(parscale) & is.finite(1 / parscale)))
+        if (! all(is.finite(parscale) & is.finite(1 / parscale)))
            stop("parscale or 1 / parscale not all finite")
     }
     if (! is.logical(minimize))
@@ -54,6 +55,7 @@ trust <- function(objfun, parinit, rinit, rmax, parscale,
     r <- rinit
     theta <- parinit
     out <- objfun(theta, ...)
+    check.objfun.output(out, minimize, d)
     accept <- TRUE
 
     if (blather) {
@@ -155,18 +157,24 @@ trust <- function(objfun, parinit, rinit, rmax, parscale,
         ########## predicted versus actual change ##########
         preddiff <- sum(ptry * (g + as.numeric(B %*% ptry) / 2))
         if (rescale) {
-            theta.try <- theta + ptry * parscale
+            theta.try <- theta + ptry / parscale
         } else {
             theta.try <- theta + ptry
         }
         out <- objfun(theta.try, ...)
+        check.objfun.output(out, minimize, d)
         ftry <- out$value
         if (! minimize)
             ftry <- (- ftry)
         rho <- (ftry - f) / preddiff
 
         ########## termination test ##########
-        is.terminate <- abs(ftry - f) < fterm || abs(preddiff) < mterm
+        if (ftry < Inf) {
+            is.terminate <- abs(ftry - f) < fterm || abs(preddiff) < mterm
+        } else {
+            is.terminate <- FALSE
+            rho <- (- Inf)
+        }
 
         ##### adjustments #####
         if (is.terminate) {
@@ -212,6 +220,7 @@ trust <- function(objfun, parinit, rinit, rmax, parscale,
     }
 
     out <- objfun(theta, ...)
+    check.objfun.output(out, minimize, d)
     out$argument <- theta
     out$converged <- is.terminate
     if (blather) {
@@ -229,4 +238,46 @@ trust <- function(objfun, parinit, rinit, rmax, parscale,
         out$preddiff <- preddiff.blather
     }
     return(out)
+}
+
+check.objfun.output <- function(obj, minimize, dimen)
+{
+    if (! is.list(obj))
+        stop("objfun returned object that is not a list")
+    foo <- obj$value
+    if (is.null(foo))
+        stop("objfun returned list that does not have a component 'value'")
+    if (! is.numeric(foo))
+        stop("objfun returned value that is not numeric")
+    if (length(foo) != 1)
+        stop("objfun returned value that is not scalar")
+    if (is.na(foo) || is.nan(foo))
+        stop("objfun returned value that is NA or NaN")
+    if (minimize && foo == (-Inf))
+        stop("objfun returned -Inf value in minimization")
+    if ((! minimize) && foo == Inf)
+        stop("objfun returned +Inf value in maximization")
+    if (is.finite(foo)) {
+        bar <- obj$gradient
+        if (is.null(bar))
+            stop("objfun returned list without component 'gradient' when value is finite")
+        if (! is.numeric(bar))
+            stop("objfun returned gradient that is not numeric")
+        if (length(bar) != dimen)
+            stop(paste("objfun returned gradient that is not vector of length", dimen))
+        if (! all(is.finite(bar)))
+            stop("objfun returned gradient not having all elements finite")
+        baz <- obj$hessian
+        if (is.null(baz))
+            stop("objfun returned list without component 'hessian' when value is finite")
+        if (! is.numeric(baz))
+            stop("objfun returned hessian that is not numeric")
+        if (! is.matrix(baz))
+            stop("objfun returned hessian that is not matrix")
+        if (! all(dim(baz) == dimen))
+            stop(paste("objfun returned hessian that is not", dimen, "by", dimen, "matrix"))
+        if (! all(is.finite(baz)))
+            stop("objfun returned hessian not having all elements finite")
+    }
+    return(TRUE)
 }

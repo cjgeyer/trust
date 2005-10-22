@@ -44,7 +44,7 @@ and the idea is we ``trust'' the Taylor series expansion only so far,
 so we minimize $m_k$ subject to the constraint $\lVert p \rVert \le \Delta_k$
 where $\lVert \,\cdot\, \rVert$ denotes the Euclidean norm.
 
-Suppose $p_k$ is the solution to the trust region subproblem
+Suppose $p_k$ is a solution to the trust region subproblem
 (about which more in Section~\ref{sec:subproblem} below).
 The adjustment of $\Delta_k$ is done as follows
 \citep[Algorithm~4.1]{naw} based on
@@ -191,6 +191,15 @@ Since the first sum on the right hand side of \eqref{eq:ptau} has
 norm less than $\Delta$ by the falsity of \eqref{eq:hard-easy-condition},
 we can choose $\tau$ to make $\lVert p_{\text{hard}}(\tau) \rVert = \Delta$.
 
+Note that the solution $p^*$ obtained in this case is non-unique.
+Even if there is only one term in the second sum in \eqref{eq:ptau},
+$\tau_j$ of opposite signs produce $p_{\text{hard}}(\tau)$ of the same
+length.
+When there is more than one term in the second sum in \eqref{eq:ptau},
+there are even more possibilities of nonuniqueness.
+This nonuniqueness is not an issue, because (at least as far as the subproblem
+is concerned) one solution is just as good as another.
+
 \subsubsection{Numerical Stability}
 
 We need to examine how all this case splitting works when the
@@ -287,37 +296,77 @@ $$
 So now we know there is a solution
 in $[- \lambda_{\text{min}}, \lambda_{\text{up}}]$.
 
-\subsection{Modified Trust Region Subproblem} \label{sec:subproblem-modified}
+\subsection{Rescaling} \label{sec:subproblem-modified}
 
 When the variables are ill-scaled, the trust region is badly designed
 and \citet[Section~4.4]{naw} recommend changing the trust region
 subproblem to
-\begin{align*}
+\begin{equation} \label{eq:problem-rescale}
+\begin{split}
    \text{minimize} &
    \quad m(p) \stackrel{\text{def}}{=} f + g^T p + \tfrac{1}{2} p^T B p
    \\
    \text{subject to} & \quad \lVert D p \lVert \le \Delta
-\end{align*}
-where $D$ is a strictly positive definite diagonal matrix.
+\end{split}
+\end{equation}
+where $D$ is a strictly positive definite diagonal matrix
+(as will be seen below, $D$ can be any invertible matrix).
 
-This is equivalent to the subproblem
-\begin{align*}
-   \text{minimize} &
-   \quad \tilde{m}(w) \stackrel{\text{def}}{=} f + g^T D^{-1} w
-   + \tfrac{1}{2} w^T D^{-1} B D^{-1} w
-   \\
-   \text{subject to} & \quad \lVert w \lVert \le \Delta
-\end{align*}
-the connection between the two problems being $w = D p$ and $p = D^{-1} w$.
-And this is a problem of the form already analyzed.  We merely replace
-$g$ and $B$ with
-\begin{align*}
+We claim that this is equivalent to running our original algorithm
+(with no $D$ or, what is equivalent, with $D$ the identity matrix)
+on the function $\tilde{f}$ defined by
+$$
+   \tilde{f}(\tilde{x}) = f(D^{-1} \tilde{x})
+$$
+Consider a point $\tilde{x}_k = D x_k$.  Here, if $g$ and $B$ denote
+the gradient and Hessian of $f$, then
+\begin{subequations}
+\begin{align}
    \tilde{g} & = D^{-1} g
+   \label{eq:modified-gradient}
    \\
    \widetilde{B} & = D^{-1} B D^{-1}
+   \label{eq:modified-hessian}
+\end{align}
+\end{subequations}
+are the gradient and Hessian of $f$.  The trust region subproblem
+(of the original kind with no $D$)
+for $\tilde{f}$ (for an iterate centered at $\tilde{x}_k$ using
+trust region ``radius'' $\Delta_k$) is
+\begin{equation} \label{eq:problem-modified}
+\begin{split}
+   \text{minimize} &
+   \quad \widetilde{m}(w) \stackrel{\text{def}}{=}
+   f + \tilde{g}^T w + \tfrac{1}{2} w^T \widetilde{B} w
+   \\
+   & \hphantom{\quad \widetilde{m}(w) \stackrel{\text{def}}{=} \vphantom{f}}
+   f + g^T D^{-1} w + \tfrac{1}{2} w^T D^{-1} B D^{-1} w
+   \\
+   \text{subject to} & \quad \lVert w \lVert \le \Delta_k
+\end{split}
+\end{equation}
+Let $w^*$ be a solution to \eqref{eq:problem-modified}, and
+define $p^* = D^{-1} w^*$.  Then $p^*$ solves \eqref{eq:problem-rescale}.
+
+Let $x_1$ is the starting point for the trust region problem
+of minimizing $f$ using rescaling $D$.
+Define $\tilde{x}_1 = D^{-1} x_1$, and consider it
+the starting point for the trust region problem
+of minimizing $\tilde{f}$ using no rescaling.
+Let $\tilde{x}_1$, $\tilde{x}_2$, $\ldots$ be the sequence of iterates
+produced in the latter problem.  Then we have
+\begin{align*}
+   \tilde{x}_{k + 1} - \tilde{x}_k
+   & =
+   w^*_k
+   \\
+   & =
+   D p^*_k
+   \\
+   & =
+   D (x_{k + 1} - x_k)
 \end{align*}
-and proceed as in the unscaled problem, converting solutions $w^*$
-back to the original scaling by $p^* = D w^*$.
+whenever we have an accepted step (so $x_{k + 1} \neq x_k$).
 
 \section{Termination Criteria}
 

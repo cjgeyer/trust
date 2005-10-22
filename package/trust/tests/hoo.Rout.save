@@ -1,0 +1,100 @@
+
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.2.0 beta (2005-09-26 r35681)
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
+
+> 
+>  library(trust)
+> 
+>  d <- 5
+>  mu <- seq(1:d)
+> 
+>  objfun <- function(x) {
++      stopifnot(is.numeric(x))
++      stopifnot(length(x) == d)
++      normxsq <- sum(x^2)
++      omnormxsq <- 1 - normxsq
++      if (normxsq >= 1) return(list(value = Inf))
++      f <- sum(x * mu) - log(omnormxsq)
++      g <- mu + 2 * x / omnormxsq
++      B <- 4 * outer(x, x) / omnormxsq^2 + 2 * diag(d) / omnormxsq
++      list(value = f, gradient = g, hessian = B)
++  }
+> 
+>  whoop <- trust(objfun, rep(0, d), 1, 100, blather = TRUE)
+>  whoop$converged
+[1] TRUE
+>  length(whoop$r)
+[1] 11
+>  data.frame(type = whoop$steptype, rho = whoop$rho, change = whoop$preddiff,
++      accept = whoop$accept, r = whoop$r)
+        type        rho        change accept      r
+1  easy-easy       -Inf -6.416198e+00  FALSE 1.0000
+2  easy-easy  0.9988621 -1.791550e+00   TRUE 0.2500
+3  easy-easy  0.9384396 -3.139210e+00   TRUE 0.5000
+4     Newton -3.7557010 -4.869740e-01  FALSE 1.0000
+5     Newton -3.7557010 -4.869740e-01  FALSE 0.2500
+6  easy-easy  0.9704734 -2.173390e-01   TRUE 0.0625
+7     Newton  0.4808662 -1.207193e-01   TRUE 0.1250
+8     Newton  1.1345592 -2.842956e-02   TRUE 0.1250
+9     Newton  1.0359754 -1.601430e-03   TRUE 0.1250
+10    Newton  1.0021017 -5.063207e-06   TRUE 0.1250
+11    Newton  1.0000102 -5.055815e-11   TRUE 0.1250
+> 
+>  whoop$argument
+[1] -0.1178785 -0.2357569 -0.3536354 -0.4715138 -0.5893923
+>  1 - sqrt(sum(whoop$argument^2))
+[1] 0.1257900
+> 
+>  mu <- 100 * mu
+> 
+>  whoop <- trust(objfun, rep(0, d), 1, 100, blather = TRUE)
+>  whoop$converged
+[1] TRUE
+>  length(whoop$r)
+[1] 23
+>  data.frame(type = whoop$steptype, rho = whoop$rho, change = whoop$preddiff,
++      accept = whoop$accept, r = whoop$r)
+        type       rho        change accept            r
+1  easy-easy      -Inf -7.406198e+02  FALSE 1.0000000000
+2  easy-easy 0.9999890 -1.853425e+02   TRUE 0.2500000000
+3  easy-easy 0.9994780 -3.702410e+02   TRUE 0.5000000000
+4  easy-easy      -Inf -7.300280e+02  FALSE 1.0000000000
+5  easy-easy      -Inf -1.840376e+02  FALSE 0.2500000000
+6  easy-easy 0.9998608 -4.610507e+01   TRUE 0.0625000000
+7  easy-easy 0.9977186 -9.188018e+01   TRUE 0.1250000000
+8  easy-easy      -Inf -1.735257e+02  FALSE 0.2500000000
+9  easy-easy      -Inf -4.488298e+01  FALSE 0.0625000000
+10 easy-easy 0.9994315 -1.131459e+01   TRUE 0.0156250000
+11 easy-easy 0.9905965 -2.230260e+01   TRUE 0.0312500000
+12 easy-easy      -Inf -3.438224e+01  FALSE 0.0625000000
+13 easy-easy      -Inf -1.009565e+01  FALSE 0.0156250000
+14 easy-easy 0.9975428 -2.617669e+00   TRUE 0.0039062500
+15 easy-easy 0.9572772 -4.908938e+00   TRUE 0.0078125000
+16    Newton      -Inf -1.802919e+00  FALSE 0.0156250000
+17 easy-easy      -Inf -1.398906e+00  FALSE 0.0039062500
+18 easy-easy 0.9854962 -4.434771e-01   TRUE 0.0009765625
+19 easy-easy 0.6258696 -5.605641e-01   TRUE 0.0019531250
+20    Newton 1.1524223 -3.788814e-02   TRUE 0.0019531250
+21    Newton 1.0478102 -2.871020e-03   TRUE 0.0019531250
+22    Newton 1.0038116 -1.648549e-05   TRUE 0.0019531250
+23    Newton 0.9997813 -5.435420e-10   TRUE 0.0019531250
+> 
+>  whoop$argument
+[1] -0.1346583 -0.2693166 -0.4039748 -0.5386331 -0.6732914
+>  1 - sqrt(sum(whoop$argument^2))
+[1] 0.001347491
+> 
+> 

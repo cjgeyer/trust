@@ -1,0 +1,38 @@
+
+ library(trust)
+
+ d <- 5
+ mu <- seq(1:d)
+
+ objfun <- function(x) {
+     stopifnot(is.numeric(x))
+     stopifnot(length(x) == d)
+     normxsq <- sum(x^2)
+     omnormxsq <- 1 - normxsq
+     if (normxsq >= 1) return(list(value = Inf))
+     f <- sum(x * mu) - log(omnormxsq)
+     g <- mu + 2 * x / omnormxsq
+     B <- 4 * outer(x, x) / omnormxsq^2 + 2 * diag(d) / omnormxsq
+     list(value = f, gradient = g, hessian = B)
+ }
+
+ whoop <- trust(objfun, rep(0, d), 1, 100, blather = TRUE)
+ whoop$converged
+ length(whoop$r)
+ data.frame(type = whoop$steptype, rho = whoop$rho, change = whoop$preddiff,
+     accept = whoop$accept, r = whoop$r)
+
+ whoop$argument
+ 1 - sqrt(sum(whoop$argument^2))
+
+ mu <- 100 * mu
+
+ whoop <- trust(objfun, rep(0, d), 1, 100, blather = TRUE)
+ whoop$converged
+ length(whoop$r)
+ data.frame(type = whoop$steptype, rho = whoop$rho, change = whoop$preddiff,
+     accept = whoop$accept, r = whoop$r)
+
+ whoop$argument
+ 1 - sqrt(sum(whoop$argument^2))
+
