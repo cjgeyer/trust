@@ -18,21 +18,25 @@
 
  whoop <- trust(objfun, rep(0, d), 1, 100, blather = TRUE)
  whoop$converged
+ whoop$gradient
  length(whoop$r)
  data.frame(type = whoop$steptype, rho = whoop$rho, change = whoop$preddiff,
      accept = whoop$accept, r = whoop$r)
 
  whoop$argument
  1 - sqrt(sum(whoop$argument^2))
+ (whoop$stepnorm / whoop$r)[whoop$accept & whoop$steptype != "Newton"]
 
- mu <- 100 * mu
+ mu <- 10 * mu
 
  whoop <- trust(objfun, rep(0, d), 1, 100, blather = TRUE)
  whoop$converged
+ whoop$gradient
  length(whoop$r)
  data.frame(type = whoop$steptype, rho = whoop$rho, change = whoop$preddiff,
      accept = whoop$accept, r = whoop$r)
 
  whoop$argument
  1 - sqrt(sum(whoop$argument^2))
+ (whoop$stepnorm / whoop$r)[whoop$accept & whoop$steptype != "Newton"]
 

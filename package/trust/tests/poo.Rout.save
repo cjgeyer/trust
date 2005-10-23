@@ -61,7 +61,7 @@ Type 'q()' to quit R.
 >  length(pout$r)
 [1] 25
 >  all.equal(out$argument, pout$argument / parscale - shift)
-[1] "Mean relative  difference: 1.011918e-07"
+[1] "Mean relative  difference: 1.011409e-07"
 > 
 >  qout <- trust(objfun, parinit, 1, 1e5, parscale = parscale, blather = TRUE)
 >  qout$converged

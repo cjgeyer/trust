@@ -272,7 +272,20 @@ in the ``hard-easy case'' and
 $$
    \phi(- \lambda_{\text{min}}) = - \frac{1}{\Delta}
 $$
-in the ``easy case''.  To get an upper bound, we note that
+in the ``easy case''.  A better lower bound uses
+$$
+   \lVert p(\lambda) \rVert^2
+   \ge \frac{C_2}{(\lambda_{\text{min}} + \lambda)^2}
+$$
+from which (setting the right hand side equal to $\Delta^2$ and solving
+for $\lambda$) we get
+$$
+   \lambda_{\text{dn}} = \frac{\sqrt{C_2}}{\Delta} - \lambda_{\text{min}}
+$$
+as a lower bound for the $\lambda$ that
+makes $\lVert p(\lambda) \rVert = \Delta$.
+
+To get an upper bound, we note that
 if we define
 \begin{equation} \label{eq:c3}
     C_3 = 
@@ -284,17 +297,13 @@ $$
    \le
    \frac{C_3}{(\lambda_{\text{min}} + \lambda)^2}
 $$
-and
-$$
-   \phi(\lambda) \ge \frac{\lambda_{\text{min}} + \lambda}{\sqrt{C_3}}
-   - \frac{1}{\Delta}
-$$
-Setting the right hand side equal to zero and solving gives
+Setting the right hand side equal to $\Delta^2$ and solving for $\lambda$ gives
 $$
    \lambda_{\text{up}} = \frac{\sqrt{C_3}}{\Delta} - \lambda_{\text{min}}
 $$
+as an upper bound.
 So now we know there is a solution
-in $[- \lambda_{\text{min}}, \lambda_{\text{up}}]$.
+in $[\lambda_{\text{dn}}, \lambda_{\text{up}}]$.
 
 \subsection{Rescaling} \label{sec:subproblem-modified}
 

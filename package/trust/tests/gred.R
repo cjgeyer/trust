@@ -119,9 +119,11 @@
 
  fred <- trust(objfun, theta.true, 1, sqrt(ncol(m)), blather = TRUE)
  fred$converged
+ max(abs(fred$gradient))
  length(fred$r)
  data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
      accept = fred$accept, r = fred$r)
+ (fred$stepnorm / fred$r)[fred$accept & fred$steptype != "Newton"]
 
  ##### note: FAILS to converge because function is unbounded below -- minimum
  #####     value does not exist

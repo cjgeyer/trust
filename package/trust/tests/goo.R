@@ -27,3 +27,5 @@
  ##### note: FAILS to converge because function is unbounded -- optimum
  #####     value does not exist
 
+ (goo$stepnorm / goo$r)[goo$accept & goo$steptype != "Newton"]
+

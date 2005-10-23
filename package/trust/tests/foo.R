@@ -19,5 +19,8 @@
 
  library(trust)
 
- trust(objfun, c(3, 1), 1, 5, blather = TRUE)
+ tout <- trust(objfun, c(3, 1), 1, 5, blather = TRUE)
+ tout
+
+ (tout$stepnorm / tout$r)[tout$accept & tout$steptype != "Newton"]
 

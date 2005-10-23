@@ -144,7 +144,7 @@ trust(objfun, parinit, rinit, rmax, parscale,
     \code{"hard-hard"} means the Lagrange multiplier for the trust region
     constraint is minus the minimal eigenvalue of the rescaled Hessian;
     \code{"hard-easy"} means it isn't.}
-  \item{argpath}{(if \code{blather == TRUE}) indicates which of the sequence of
+  \item{accept}{(if \code{blather == TRUE}) indicates which of the sequence of
     solutions of the trust region subproblem were accepted as the next
     iterate.  (When not accepted the trust region radius is reduced, and
     the previous iterate is kept.)}
@@ -153,8 +153,17 @@ trust(objfun, parinit, rinit, rmax, parscale,
     predicted decrease in the objective function in the trust region
     subproblem, where predicted means the predicted decrease in the two-term
     Taylor series model used in the subproblem.}
-  \item{argpath}{(if \code{blather == TRUE}) the sequence of objective function
+  \item{valpath}{(if \code{blather == TRUE}) the sequence of objective function
     values at the iterates.}
+  \item{valtry}{(if \code{blather == TRUE}) the sequence of objective function
+    values at the solutions of the trust region subproblem.}
+  \item{preddiff}{(if \code{blather == TRUE}) the sequence of predicted
+    differences using the two-term Taylor-series model between the function
+    values at the current iterate and at the solution of the trust region
+    subproblem.}
+  \item{stepnorm}{(if \code{blather == TRUE}) the sequence of norms of
+    steps, that is distance between current iterate and proposed new iterate
+    found in the trust region subproblem.}
 }
 \references{
   Fletcher, R. (1987)
@@ -193,7 +202,7 @@ trust(objfun, c(3, 1), 1, 5)
 
 ##### function with restricted domain #####
 d <- 5
-mu <- 100 * seq(1, d)
+mu <- 10 * seq(1, d)
 objfun <- function(x) {
     normxsq <- sum(x^2)
     omnormxsq <- 1 - normxsq

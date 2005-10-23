@@ -64,8 +64,10 @@ trust <- function(objfun, parinit, rinit, rmax, parscale,
         type.blather <- NULL
         accept.blather <- NULL
         r.blather <- NULL
+        stepnorm.blather <- NULL
         rho.blather <- NULL
         val.blather <- NULL
+        val.try.blather <- NULL
         preddiff.blather <- NULL
     }
 
@@ -74,13 +76,17 @@ trust <- function(objfun, parinit, rinit, rmax, parscale,
         if (blather) {
             theta.blather <- rbind(theta.blather, theta)
             r.blather <- c(r.blather, r)
-            val.blather <- c(val.blather, out$value)
+            if (accept)
+                val.blather <- c(val.blather, out$value)
+            else
+                val.blather <- c(val.blather, out.value.save)
         }
 
         if (accept) {
             B <- out$hessian
             g <- out$gradient
             f <- out$value
+            out.value.save <- f
             if (rescale) { 
                 B <- B / outer(parscale, parscale)
                 g <- g / parscale
@@ -116,6 +122,7 @@ trust <- function(objfun, parinit, rinit, rmax, parscale,
                 is.easy <- TRUE
                 is.hard <- (C2 == 0)
                 ##### easy cases #####
+                beta.dn <- sqrt(C2) / r
                 beta.up <- sqrt(C3) / r
                 fred <- function(beep) {
                     if (beep == 0) {
@@ -126,15 +133,12 @@ trust <- function(objfun, parinit, rinit, rmax, parscale,
                     }
                     return(sqrt(1 / sum((gq / (beta + beep))^2)) - 1 / r)
                 }
-                ##### uniroot is too effing stupid to recognize
-                ##### a root when given one
-                ##### actually it is not just uniroot
-                ##### can get wrong sign by inexact arithmetic
-                ##### so who was "too effing stupid"?
                 if (fred(beta.up) <= 0) {
                     uout <- list(root = beta.up)
+                } else if (fred(beta.dn) >= 0) {
+                    uout <- list(root = beta.dn)
                 } else {
-                    uout <- uniroot(fred, c(0, beta.up))
+                    uout <- uniroot(fred, c(beta.dn, beta.up))
                 }
                 wtry <- gq / (beta + uout$root)
                 ptry <- as.numeric(- eout$vectors %*% wtry)
@@ -145,7 +149,7 @@ trust <- function(objfun, parinit, rinit, rmax, parscale,
                 wtry <- gq / beta
                 wtry[imin] <- 0
                 ptry <- as.numeric(- eout$vectors %*% wtry)
-                utry <- r - norm(ptry)
+                utry <- sqrt(r^2 - sum(ptry^2))
                 if (utry > 0) {
                     vtry <- eout$vectors[ , imin, drop = FALSE]
                     vtry <- vtry[ , 1]
@@ -196,8 +200,10 @@ trust <- function(objfun, parinit, rinit, rmax, parscale,
 
         if (blather) {
             theta.try.blather <- rbind(theta.try.blather, theta.try)
+            val.try.blather <- c(val.try.blather, out$value)
             accept.blather <- c(accept.blather, accept)
             preddiff.blather <- c(preddiff.blather, preddiff)
+            stepnorm.blather <- c(stepnorm.blather, norm(ptry))
             if (is.newton) {
                 mytype <- "Newton"
             } else {
@@ -233,9 +239,11 @@ trust <- function(objfun, parinit, rinit, rmax, parscale,
         out$r <- r.blather
         out$rho <- rho.blather
         out$valpath <- val.blather
+        out$valtry <- val.try.blather
         if (! minimize)
             preddiff.blather <- (- preddiff.blather)
         out$preddiff <- preddiff.blather
+        out$stepnorm <- stepnorm.blather
     }
     return(out)
 }
