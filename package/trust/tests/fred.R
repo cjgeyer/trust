@@ -73,9 +73,7 @@
  x <- tabulate(x, nbins = nrow(m))
 
  ##### save data
- options(error = dump.frames, show.error.messages = FALSE, warn = -1)
- iffy <- try(read.table("fred.txt"))
- options(error = NULL, show.error.messages = TRUE, warn = 0)
+ iffy <- try(read.table("fred.txt"), silent = TRUE)
  if (inherits(iffy, "try-error")) {
      data <- data.frame(x = x, m = m)
      write.table(data, file = "fred.txt", row.names = FALSE)

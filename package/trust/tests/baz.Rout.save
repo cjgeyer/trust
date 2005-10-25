@@ -54,6 +54,9 @@ $argument
 $converged
 [1] TRUE
 
+$iterations
+[1] 6
+
 $argpath
             [,1]      [,2]
 [1,]  0.00000000 0.0000000

@@ -70,7 +70,8 @@ trust(objfun, parinit, rinit, rmax, parscale,
   returned by \code{objfun} when evaluated at the current iterate,
   subject to the constraint
   \deqn{p^T D p \le r^2}{p^T D p <= r^2}
-  where \eqn{D} is the diagonal matrix with elements \code{parscale} and
+  where \eqn{D} is the diagonal matrix with diagonal elements
+  \code{parscale} and
   \eqn{r} is the current trust region radius.  Both the current iterate
   \eqn{x} and the trust region radius \eqn{r}
   are adjusted as the algorithm iterates, as follows.
@@ -131,7 +132,10 @@ trust(objfun, parinit, rinit, rmax, parscale,
   \item{argument}{the final iterate.}
   \item{converged}{if \code{TRUE} the final iterate was deemed optimal by
     the specified termination criteria.}
-  \item{argpath}{(if \code{blather == TRUE}) the sequence of iterates.}
+  \item{iterations}{number of trust region subproblems done (including those
+    whose solutions are not accepted).}
+  \item{argpath}{(if \code{blather == TRUE}) the sequence of iterates, not
+    including the final iterate.}
   \item{argtry}{(if \code{blather == TRUE}) the sequence of solutions of the
     trust region subproblem.}
   \item{steptype}{(if \code{blather == TRUE}) the sequence of cases that arise
@@ -215,7 +219,7 @@ objfun <- function(x) {
 
 whoop <- trust(objfun, rep(0, d), 1, 100, blather = TRUE)
 whoop$converged
-length(whoop$r)
+whoop$iterations
 data.frame(type = whoop$steptype, rho = whoop$rho, change = whoop$preddiff,
     accept = whoop$accept, r = whoop$r)
 

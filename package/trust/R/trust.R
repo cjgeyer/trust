@@ -54,7 +54,12 @@ trust <- function(objfun, parinit, rinit, rmax, parscale,
 
     r <- rinit
     theta <- parinit
-    out <- objfun(theta, ...)
+    out <- try(objfun(theta, ...))
+    if (inherits(out, "try-error")) {
+        warning("error in first call to objfun")
+        return(list(error = out, argument = theta, converged = FALSE,
+            iterations = 0))
+    }
     check.objfun.output(out, minimize, d)
     accept <- TRUE
 
@@ -165,7 +170,9 @@ trust <- function(objfun, parinit, rinit, rmax, parscale,
         } else {
             theta.try <- theta + ptry
         }
-        out <- objfun(theta.try, ...)
+        out <- try(objfun(theta.try, ...))
+        if (inherits(out, "try-error"))
+            break
         check.objfun.output(out, minimize, d)
         ftry <- out$value
         if (! minimize)
@@ -225,10 +232,20 @@ trust <- function(objfun, parinit, rinit, rmax, parscale,
             break
     }
 
-    out <- objfun(theta, ...)
-    check.objfun.output(out, minimize, d)
-    out$argument <- theta
-    out$converged <- is.terminate
+    if (inherits(out, "try-error")) {
+        out <- list(error = out, argument = theta.try, converged = FALSE)
+    } else {
+        out <- try(objfun(theta, ...))
+        if (inherits(out, "try-error")) {
+            out <- list(error = out)
+            warning("error in last call to objfun")
+        } else {
+            check.objfun.output(out, minimize, d)
+        }
+        out$argument <- theta
+        out$converged <- is.terminate
+    }
+    out$iterations <- iiter
     if (blather) {
         dimnames(theta.blather) <- NULL
         out$argpath <- theta.blather
