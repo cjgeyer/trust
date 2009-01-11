@@ -1,6 +1,6 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 beta (2005-09-26 r35681)
+R version 2.6.2 (2008-02-08)
+Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > 
@@ -88,7 +88,8 @@ Type 'q()' to quit R.
 >  p <- p / sum(p)
 >  x <- sample(nrow(m), n, replace = TRUE, prob = p)
 Warning message:
-Walker's alias method used: results are different from R < 2.2.0 
+In sample(nrow(m), n, replace = TRUE, prob = p) :
+  Walker's alias method used: results are different from R < 2.2.0
 >  x <- tabulate(x, nbins = nrow(m))
 > 
 >  ##### save data

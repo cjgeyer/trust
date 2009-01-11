@@ -1,6 +1,6 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 beta (2005-09-26 r35681)
+R version 2.6.2 (2008-02-08)
+Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > 
@@ -88,7 +88,8 @@ Type 'q()' to quit R.
 >  p <- p / sum(p)
 >  x <- sample(nrow(m), n, replace = TRUE, prob = p)
 Warning message:
-Walker's alias method used: results are different from R < 2.2.0 
+In sample(nrow(m), n, replace = TRUE, prob = p) :
+  Walker's alias method used: results are different from R < 2.2.0
 >  x <- tabulate(x, nbins = nrow(m))
 > 
 >  ##### save data
@@ -148,19 +149,19 @@ Walker's alias method used: results are different from R < 2.2.0
 >  fred$converged
 [1] TRUE
 >  max(abs(fred$gradient))
-[1] 1.571989e-06
+[1] 3.28626e-14
 >  length(fred$r)
 [1] 7
 >  data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
 +      accept = fred$accept, r = fred$r)
-       type        rho       change accept r
-1 easy-easy  0.9670785 3.310155e+02   TRUE 1
-2 easy-easy  0.7165275 2.588623e+02   TRUE 2
-3 easy-easy  1.0316910 4.725173e+01   TRUE 2
-4    Newton  0.9937390 4.463915e+00   TRUE 4
-5    Newton  1.0060618 2.823699e-02   TRUE 4
-6    Newton  1.0000957 2.797547e-06   TRUE 4
-7    Newton -4.9010139 6.379064e-14   TRUE 4
+       type       rho       change accept r
+1 easy-easy 0.9670785 3.310155e+02   TRUE 1
+2 easy-easy 0.7165275 2.588623e+02   TRUE 2
+3 easy-easy 1.0316910 4.725173e+01   TRUE 2
+4    Newton 0.9937390 4.463915e+00   TRUE 4
+5    Newton 1.0060618 2.823699e-02   TRUE 4
+6    Newton 1.0000957 2.797547e-06   TRUE 4
+7    Newton 0.8910934 6.379064e-14   TRUE 4
 >  (fred$stepnorm / fred$r)[fred$accept & fred$steptype != "Newton"]
 [1] 1.0000000 0.9999998 0.9999999
 > 
@@ -170,7 +171,7 @@ Walker's alias method used: results are different from R < 2.2.0
 >  fred$converged
 [1] TRUE
 >  max(abs(fred$gradient))
-[1] 8.921493e-07
+[1] 3.28626e-14
 >  length(fred$r)
 [1] 16
 >  data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
@@ -191,7 +192,7 @@ Walker's alias method used: results are different from R < 2.2.0
 13    Newton  1.0595818 2.688851e+00   TRUE 9.273618
 14    Newton  1.0078548 2.671281e-02   TRUE 9.273618
 15    Newton  1.0001092 3.941322e-06   TRUE 9.273618
-16    Newton -1.0291808 1.104634e-13   TRUE 9.273618
+16    Newton  1.0291808 1.104634e-13   TRUE 9.273618
 >  (fred$stepnorm / fred$r)[fred$accept & fred$steptype != "Newton"]
  [1] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 0.9999999
  [8] 0.9999999 0.9999997 1.0000000

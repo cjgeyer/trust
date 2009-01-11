@@ -40,3 +40,5 @@
  1 - sqrt(sum(whoop$argument^2))
  (whoop$stepnorm / whoop$r)[whoop$accept & whoop$steptype != "Newton"]
 
+ try(whoop <- trust(objfun, rep(0.5, d), 1, 100, blather = TRUE))
+

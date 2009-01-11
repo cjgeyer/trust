@@ -35,13 +35,15 @@ trust(objfun, parinit, rinit, rmax, parscale,
     a restricted domain does not allow for true constrained optimization.
     The algorithm will converge to solutions on the boundary very slowly.
     (See details below.)}
-  \item{parinit}{starting parameter values for the optimization.}
+  \item{parinit}{starting parameter values for the optimization.  Must
+    be feasible (in the domain).}
   \item{rinit}{starting trust region radius.  The trust region radius
     (see details below) is adjusted as the
     algorithm proceeds.  A bad initial value wastes a few steps while the
     radius is adjusted, but does not keep the algorithm from working properly.}
   \item{rmax}{maximum allowed trust region radius.  This may be set very
-    large.  If set small, the algorithm traces a steepest descent path.}
+    large.  If set small, the algorithm traces a steepest descent path
+    (steepest ascent, when \verb@minimize = FALSE@).}
   \item{parscale}{an estimate of the size of each parameter
     at the minimum.  The algorithm operates as if optimizing
     \code{function(x, ...) objfun(x / parscale, ...)}.  May be missing
@@ -69,7 +71,7 @@ trust(objfun, parinit, rinit, rmax, parscale,
   where \eqn{f}, \eqn{g}, and \eqn{B} are the value, gradient, and Hessian
   returned by \code{objfun} when evaluated at the current iterate,
   subject to the constraint
-  \deqn{p^T D p \le r^2}{p^T D p <= r^2}
+  \deqn{p^T D^2 p \le r^2}{p^T D^2 p <= r^2}
   where \eqn{D} is the diagonal matrix with diagonal elements
   \code{parscale} and
   \eqn{r} is the current trust region radius.  Both the current iterate
@@ -82,7 +84,7 @@ trust(objfun, parinit, rinit, rmax, parscale,
   \deqn{\rho = \frac{f^* - f}{g^T p + \frac{1}{2} p^T B p}}{rho = (f^* - f) / (g^T p + (1 / 2) p^T B p)}
   If \eqn{\rho \ge 1 / 4}{rho >= 1 / 4}, then we accept \eqn{x + p} as
   the next iterate.  Moreover, if \eqn{\rho > 3 / 4}{rho > 3 / 4}
-  and the step was constrained (\eqn{p^T D p = r^2}),
+  and the step was constrained (\eqn{p^T D^2 p = r^2}),
   then we increase the trust region radius to 2 times its current value
   or \code{rmax}, whichever is least,
   If \eqn{\rho < 1 / 4}{rho < 1 / 4}, then we do not accept \eqn{x + p} as
@@ -227,6 +229,9 @@ data.frame(type = whoop$steptype, rho = whoop$rho, change = whoop$preddiff,
 whoop$argument
 ##### distance of solution from boundary
 1 - sqrt(sum(whoop$argument^2))
+
+##### fail when initial point not feasible
+\dontrun{trust(objfun, rep(0.5, d), 1, 100, blather = TRUE)}
 }
 \keyword{nonlinear}
 \keyword{optimize}

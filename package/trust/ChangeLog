@@ -1,3 +1,10 @@
 
  0.1   first version
 
+ 0.1-1   found typo/thinko in documentation
+         also corrected bug found by Vinicius Melo <xvinnie@gmail.com>
+         didn't give informative error message (garbage in, error message
+         out!) when given infeasible initial point.  Now does.  Also
+         help page changed specify initial point must be feasible and
+         example given of error in examples.
+ 

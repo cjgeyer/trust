@@ -1,6 +1,6 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 beta (2005-09-26 r35681)
+R version 2.6.2 (2008-02-08)
+Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > 
@@ -41,7 +41,7 @@ $value
 [1] -30.93159
 
 $gradient
-[1] 0.00000e+00 5.32907e-15
+[1]  0.00000e+00 -5.32907e-15
 
 $hessian
          [,1] [,2]
@@ -49,7 +49,7 @@ $hessian
 [2,] 0.000000    4
 
 $argument
-[1] -2.266988  7.071068
+[1] -2.266988 -7.071068
 
 $converged
 [1] TRUE
@@ -58,26 +58,26 @@ $iterations
 [1] 8
 
 $argpath
-          [,1]     [,2]
-[1,]  0.000000 0.000000
-[2,] -1.000000 0.000000
-[3,] -1.718447 1.866503
-[4,] -2.001409 5.856479
-[5,] -2.274119 7.594949
-[6,] -2.266994 7.120719
-[7,] -2.266988 7.071582
-[8,] -2.266988 7.071068
+          [,1]      [,2]
+[1,]  0.000000  0.000000
+[2,] -1.000000  0.000000
+[3,] -1.718447 -1.866503
+[4,] -2.001409 -5.856479
+[5,] -2.274119 -7.594949
+[6,] -2.266994 -7.120719
+[7,] -2.266988 -7.071582
+[8,] -2.266988 -7.071068
 
 $argtry
-          [,1]     [,2]
-[1,] -1.000000 0.000000
-[2,] -1.718447 1.866503
-[3,] -2.001409 5.856479
-[4,] -2.274119 7.594949
-[5,] -2.266994 7.120719
-[6,] -2.266988 7.071582
-[7,] -2.266988 7.071068
-[8,] -2.266988 7.071068
+          [,1]      [,2]
+[1,] -1.000000  0.000000
+[2,] -1.718447 -1.866503
+[3,] -2.001409 -5.856479
+[4,] -2.274119 -7.594949
+[5,] -2.266994 -7.120719
+[6,] -2.266988 -7.071582
+[7,] -2.266988 -7.071068
+[8,] -2.266988 -7.071068
 
 $steptype
 [1] "hard-easy" "hard-hard" "easy-easy" "Newton"    "Newton"    "Newton"   

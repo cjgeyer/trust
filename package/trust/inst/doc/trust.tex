@@ -49,13 +49,14 @@ Suppose $p_k$ is a solution to the trust region subproblem
 The adjustment of $\Delta_k$ is done as follows
 \citep[Algorithm~4.1]{naw} based on
 \begin{equation} \label{eq:rhok}
-   \rho_k = \frac{f(x_k) - f(x_k + p_k)}{m_k(x_k) - m_k(x_k + p_k)}
+   \rho_k = \frac{f(x_k) - f(x_k + p_k)}{m_k(0) - m_k(p_k)}
 \end{equation}
 which is the actual decrease in the objective function $f$ in the step
 compared to the predicted decrease using $m_k$.  If $\rho_k$ is small
 or negative, then $m_k$ is a bad model at $x_k + p_k$ so the step should
 not be used and the trust region radius should be adjusted.
-The complete trust region main loop body is
+The complete trust region main loop body solves the trust region subproblem
+and then adjusts the current point and trust region radius as follows
 \begin{tabbing}
 \textbf{if} ($\rho_k < 1 / 4$) \textbf{then} \\
 \qquad \= $x_{k + 1} := x_k$ \\

@@ -61,6 +61,8 @@ trust <- function(objfun, parinit, rinit, rmax, parscale,
             iterations = 0))
     }
     check.objfun.output(out, minimize, d)
+    if (! is.finite(out$value))
+        stop("parinit not feasible")
     accept <- TRUE
 
     if (blather) {
