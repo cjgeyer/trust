@@ -7,4 +7,6 @@
          out!) when given infeasible initial point.  Now does.  Also
          help page changed specify initial point must be feasible and
          example given of error in examples.
+
+ 0.1-2  fix bug in docs found by Rdversion 2 parser.
  

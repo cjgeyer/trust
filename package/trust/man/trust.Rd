@@ -43,7 +43,7 @@ trust(objfun, parinit, rinit, rmax, parscale,
     radius is adjusted, but does not keep the algorithm from working properly.}
   \item{rmax}{maximum allowed trust region radius.  This may be set very
     large.  If set small, the algorithm traces a steepest descent path
-    (steepest ascent, when \verb@minimize = FALSE@).}
+    (steepest ascent, when \code{minimize = FALSE}).}
   \item{parscale}{an estimate of the size of each parameter
     at the minimum.  The algorithm operates as if optimizing
     \code{function(x, ...) objfun(x / parscale, ...)}.  May be missing
