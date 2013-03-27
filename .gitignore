@@ -1,0 +1,11 @@
+*.pdf
+*.dvi
+*.aux
+*.log
+*.bak
+*.o
+*.so
+symbols.rds
+*.tar.gz
+*.Rcheck
+*.Rout
