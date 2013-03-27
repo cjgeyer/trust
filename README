@@ -1,0 +1,5 @@
+R package
+Trust Region Optimization
+http://www.stat.umn.edu/geyer/trust/
+Subdirectory package/trust is the source for the devel version of the R package
+Package is on CRAN at http://cran.r-project.org/package=trust
