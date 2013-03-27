@@ -8,6 +8,8 @@
 \RequirePackage{amsfonts}
 \newcommand{\real}{\mathbb{R}}
 
+% \VignetteIndexEntry{Trust Regions Design Document}
+
 \begin{document}
 
 \title{Trust Regions}
