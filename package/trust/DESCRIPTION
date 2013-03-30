@@ -1,6 +1,6 @@
 Package: trust
-Version: 0.1-3
-Date: 2013-03-26
+Version: 0.1-4
+Date: 2013-03-30
 Title: Trust Region Optimization
 Author: Charles J. Geyer <charlie@stat.umn.edu>.
 Maintainer: Charles J. Geyer <charlie@stat.umn.edu>
