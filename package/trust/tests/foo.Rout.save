@@ -1,7 +1,7 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 beta (2005-09-26 r35681)
-ISBN 3-900051-07-0
+R version 3.0.3 (2014-03-06) -- "Warm Puppy"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > 
@@ -50,7 +50,7 @@ $hessian
 [2,] -400.0000  200
 
 $argument
-[1] 1.000000 1.000000
+[1] 1 1
 
 $converged
 [1] TRUE
@@ -148,7 +148,7 @@ $preddiff
 [21] -1.363155e-08
 
 $stepnorm
- [1] 1.000000e-00 2.000000e+00 3.243678e-01 3.883875e+00 1.000000e+00
+ [1] 1.000000e+00 2.000000e+00 3.243678e-01 3.883875e+00 1.000000e+00
  [6] 2.500007e-01 5.000010e-01 7.542615e-01 1.657492e-01 9.532179e-01
 [11] 2.500056e-01 5.000045e-01 9.677608e-02 4.541137e-01 1.249989e-01
 [16] 2.500017e-01 6.891465e-02 1.153040e-01 1.334802e-02 7.473704e-03
@@ -160,3 +160,6 @@ $stepnorm
 [8] 1.0000067
 > 
 > 
+> proc.time()
+   user  system elapsed 
+  0.126   0.025   0.153 

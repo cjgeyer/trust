@@ -1,7 +1,7 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 beta (2005-09-26 r35681)
-ISBN 3-900051-07-0
+R version 3.0.3 (2014-03-06) -- "Warm Puppy"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > 
@@ -42,27 +42,27 @@ Type 'q()' to quit R.
 [1] 20
 >  data.frame(type = goo$steptype, rho = goo$rho, change = goo$preddiff,
 +      accept = goo$accept, r = goo$r)
-        type rho     change accept r
-1  easy-easy   1   -5.72063   TRUE 1
-2  easy-easy   1  -12.04462   TRUE 2
-3  easy-easy   1  -44.18127   TRUE 4
-4  easy-easy   1  -99.27789   TRUE 5
-5  easy-easy   1 -149.05763   TRUE 5
-6  easy-easy   1 -198.98647   TRUE 5
-7  easy-easy   1 -248.95678   TRUE 5
-8  easy-easy   1 -298.94224   TRUE 5
-9  easy-easy   1 -348.93429   TRUE 5
-10 easy-easy   1 -398.92959   TRUE 5
-11 easy-easy   1 -448.92663   TRUE 5
-12 easy-easy   1 -498.92467   TRUE 5
-13 easy-easy   1 -548.92376   TRUE 5
-14 easy-easy   1 -598.92153   TRUE 5
-15 easy-easy   1 -648.92100   TRUE 5
-16 easy-easy   1 -698.92059   TRUE 5
-17 easy-easy   1 -748.92028   TRUE 5
-18 easy-easy   1 -798.92003   TRUE 5
-19 easy-easy   1 -848.91983   TRUE 5
-20 easy-easy   1 -898.91967   TRUE 5
+        type rho      change accept r
+1  easy-easy   1   -5.720631   TRUE 1
+2  easy-easy   1  -12.044621   TRUE 2
+3  easy-easy   1  -44.181266   TRUE 4
+4  easy-easy   1  -99.277886   TRUE 5
+5  easy-easy   1 -149.057629   TRUE 5
+6  easy-easy   1 -198.986472   TRUE 5
+7  easy-easy   1 -248.956779   TRUE 5
+8  easy-easy   1 -298.942240   TRUE 5
+9  easy-easy   1 -348.934295   TRUE 5
+10 easy-easy   1 -398.929590   TRUE 5
+11 easy-easy   1 -448.926628   TRUE 5
+12 easy-easy   1 -498.924671   TRUE 5
+13 easy-easy   1 -548.923761   TRUE 5
+14 easy-easy   1 -598.921527   TRUE 5
+15 easy-easy   1 -648.920996   TRUE 5
+16 easy-easy   1 -698.920590   TRUE 5
+17 easy-easy   1 -748.920276   TRUE 5
+18 easy-easy   1 -798.920028   TRUE 5
+19 easy-easy   1 -848.919830   TRUE 5
+20 easy-easy   1 -898.919670   TRUE 5
 > 
 >  ##### note: FAILS to converge because function is unbounded -- optimum
 >  #####     value does not exist
@@ -73,3 +73,6 @@ Type 'q()' to quit R.
 [15] 0.9999990 0.9999993 0.9999995 0.9999996 0.9999997 0.9999998
 > 
 > 
+> proc.time()
+   user  system elapsed 
+  0.140   0.018   0.160 

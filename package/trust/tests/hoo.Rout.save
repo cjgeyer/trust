@@ -1,7 +1,7 @@
 
-R version 2.6.2 (2008-02-08)
-Copyright (C) 2008 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
+R version 3.0.3 (2014-03-06) -- "Warm Puppy"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -37,7 +37,7 @@ Type 'q()' to quit R.
 >  whoop$converged
 [1] TRUE
 >  whoop$gradient
-[1] -1.078699e-10 -2.157399e-10 -3.236096e-10 -4.314797e-10 -5.393499e-10
+[1] -1.078728e-10 -2.157452e-10 -3.236180e-10 -4.314904e-10 -5.393632e-10
 >  length(whoop$r)
 [1] 11
 >  data.frame(type = whoop$steptype, rho = whoop$rho, change = whoop$preddiff,
@@ -46,21 +46,21 @@ Type 'q()' to quit R.
 1  easy-easy       -Inf -6.416198e+00  FALSE 1.0000
 2  easy-easy  0.9988621 -1.791550e+00   TRUE 0.2500
 3  easy-easy  0.9384396 -3.139210e+00   TRUE 0.5000
-4     Newton -3.7556923 -4.869739e-01  FALSE 1.0000
-5     Newton -3.7556923 -4.869739e-01  FALSE 0.2500
-6  easy-easy  0.9704734 -2.173391e-01   TRUE 0.0625
-7     Newton  0.4808668 -1.207191e-01   TRUE 0.1250
-8     Newton  1.1345590 -2.842948e-02   TRUE 0.1250
-9     Newton  1.0359753 -1.601421e-03   TRUE 0.1250
-10    Newton  1.0021017 -5.063150e-06   TRUE 0.1250
-11    Newton  0.9999978 -5.055701e-11   TRUE 0.1250
+4     Newton -3.7556908 -4.869739e-01  FALSE 1.0000
+5     Newton -3.7556908 -4.869739e-01  FALSE 0.2500
+6  easy-easy  0.9704735 -2.173390e-01   TRUE 0.0625
+7     Newton  0.4808662 -1.207193e-01   TRUE 0.1250
+8     Newton  1.1345592 -2.842958e-02   TRUE 0.1250
+9     Newton  1.0359755 -1.601431e-03   TRUE 0.1250
+10    Newton  1.0021017 -5.063216e-06   TRUE 0.1250
+11    Newton  1.0000245 -5.055832e-11   TRUE 0.1250
 > 
 >  whoop$argument
 [1] -0.1178785 -0.2357569 -0.3536354 -0.4715138 -0.5893923
 >  1 - sqrt(sum(whoop$argument^2))
-[1] 0.1257900
+[1] 0.12579
 >  (whoop$stepnorm / whoop$r)[whoop$accept & whoop$steptype != "Newton"]
-[1] 1.0000000 0.9999999 1.0000005
+[1] 1.0000000 0.9999999 0.9999996
 > 
 >  mu <- 10 * mu
 > 
@@ -68,27 +68,27 @@ Type 'q()' to quit R.
 >  whoop$converged
 [1] TRUE
 >  whoop$gradient
-[1] -3.518963e-12 -7.037926e-12 -1.056222e-11 -1.407585e-11 -1.760014e-11
+[1] -3.561595e-12 -7.123191e-12 -1.068656e-11 -1.424638e-11 -1.782041e-11
 >  length(whoop$r)
 [1] 15
 >  data.frame(type = whoop$steptype, rho = whoop$rho, change = whoop$preddiff,
 +      accept = whoop$accept, r = whoop$r)
-        type        rho        change accept        r
-1  easy-easy       -Inf -7.316198e+01  FALSE 1.000000
-2  easy-easy  0.9998897 -1.847800e+01   TRUE 0.250000
-3  easy-easy  0.9947072 -3.651210e+01   TRUE 0.500000
-4  easy-easy       -Inf -6.257014e+01  FALSE 1.000000
-5  easy-easy -0.3251657 -1.717315e+01  FALSE 0.250000
-6  easy-easy  0.9985379 -4.388951e+00   TRUE 0.062500
-7  easy-easy  0.9751869 -8.447947e+00   TRUE 0.125000
-8     Newton       -Inf -6.717855e+00  FALSE 0.250000
-9  easy-easy -4.4815250 -3.166862e+00  FALSE 0.062500
-10 easy-easy  0.9927369 -8.855630e-01   TRUE 0.015625
-11 easy-easy  0.8548179 -1.444545e+00   TRUE 0.031250
-12    Newton  0.8728750 -1.388610e-02   TRUE 0.062500
-13    Newton  1.0181349 -3.855828e-04   TRUE 0.062500
-14    Newton  1.0005138 -2.973090e-07   TRUE 0.062500
-15    Newton  1.0451457 -1.767611e-13   TRUE 0.062500
+        type         rho        change accept        r
+1  easy-easy        -Inf -7.316198e+01  FALSE 1.000000
+2  easy-easy  0.99988968 -1.847800e+01   TRUE 0.250000
+3  hard-easy  0.99470720 -3.651210e+01   TRUE 0.500000
+4  easy-easy        -Inf -6.257015e+01  FALSE 1.000000
+5  easy-easy -0.04965656 -1.717315e+01  FALSE 0.250000
+6  easy-easy  0.99853785 -4.388951e+00   TRUE 0.062500
+7  easy-easy  0.97518694 -8.447947e+00   TRUE 0.125000
+8     Newton        -Inf -6.717856e+00  FALSE 0.250000
+9  easy-easy -4.26392242 -3.166862e+00  FALSE 0.062500
+10 easy-easy  0.99273694 -8.855630e-01   TRUE 0.015625
+11 easy-easy  0.85481794 -1.444545e+00   TRUE 0.031250
+12    Newton  0.87287500 -1.388610e-02   TRUE 0.062500
+13    Newton  1.01813487 -3.855828e-04   TRUE 0.062500
+14    Newton  1.00051376 -2.973089e-07   TRUE 0.062500
+15    Newton  0.96475045 -1.767610e-13   TRUE 0.062500
 > 
 >  whoop$argument
 [1] -0.1330340 -0.2660681 -0.3991021 -0.5321362 -0.6651702
@@ -102,3 +102,6 @@ Error in trust(objfun, rep(0.5, d), 1, 100, blather = TRUE) :
   parinit not feasible
 > 
 > 
+> proc.time()
+   user  system elapsed 
+  0.138   0.028   0.168 

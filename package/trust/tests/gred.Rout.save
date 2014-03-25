@@ -1,7 +1,7 @@
 
-R version 2.6.2 (2008-02-08)
-Copyright (C) 2008 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
+R version 3.0.3 (2014-03-06) -- "Warm Puppy"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -88,7 +88,7 @@ Type 'q()' to quit R.
 >  p <- p / sum(p)
 >  x <- sample(nrow(m), n, replace = TRUE, prob = p)
 Warning message:
-In sample(nrow(m), n, replace = TRUE, prob = p) :
+In sample.int(x, size, replace, prob) :
   Walker's alias method used: results are different from R < 2.2.0
 >  x <- tabulate(x, nbins = nrow(m))
 > 
@@ -274,3 +274,6 @@ In sample(nrow(m), n, replace = TRUE, prob = p) :
 >  ##### test whether fred(beta.up) == 0 before calling uniroot
 > 
 > 
+> proc.time()
+   user  system elapsed 
+  1.216   0.024   1.247 
