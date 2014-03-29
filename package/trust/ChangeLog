@@ -14,4 +14,6 @@
         also bumped required R version to >= 2.6.0 because 2.4.1 broken
         also moved trust.tex to trust.Rnw so now vignette
 
-0.1-5   vignettes directory
+ 0.1-5   vignettes directory
+
+ 0.1-6   changed LICENCE file as per CRAN instructions
