@@ -147,8 +147,8 @@ Type 'q()' to quit R.
 +      minimize = FALSE, blather = TRUE)
 >  fred$converged
 [1] TRUE
->  max(abs(fred$gradient))
-[1] 4.26e-14
+>  ceiling(log10(max(abs(fred$gradient))))
+[1] -13
 >  length(fred$r)
 [1] 7
 >  data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
@@ -169,8 +169,8 @@ Type 'q()' to quit R.
 +      minimize = FALSE, blather = TRUE)
 >  fred$converged
 [1] TRUE
->  max(abs(fred$gradient))
-[1] 2.58e-14
+>  ceiling(log10(max(abs(fred$gradient))))
+[1] -13
 >  length(fred$r)
 [1] 16
 >  data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
@@ -198,4 +198,4 @@ Type 'q()' to quit R.
 > 
 > proc.time()
    user  system elapsed 
-  1.892   0.072   1.967 
+  1.876   0.076   1.946 

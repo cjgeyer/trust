@@ -126,7 +126,7 @@
  fred <- trust(objfun, rep(0, length(theta.true)), 1, sqrt(ncol(m)),
      minimize = FALSE, blather = TRUE)
  fred$converged
- max(abs(fred$gradient))
+ ceiling(log10(max(abs(fred$gradient))))
  length(fred$r)
  data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
      accept = fred$accept, r = fred$r)
@@ -136,7 +136,7 @@
  fred <- trust(objfun, rep(-5, length(theta.true)), 1, sqrt(ncol(m)),
      minimize = FALSE, blather = TRUE)
  fred$converged
- max(abs(fred$gradient))
+ ceiling(log10(max(abs(fred$gradient))))
  length(fred$r)
  data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
      accept = fred$accept, r = fred$r)
