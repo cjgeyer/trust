@@ -21,7 +21,7 @@
  whoop$converged
  ceiling(log10(max(abs(whoop$gradient))))
  length(whoop$r)
- data.frame(type = whoop$steptype, rho = round(whoop$rho, 2),
+ data.frame(type = whoop$steptype, # rho = round(whoop$rho, 2),
      change = whoop$preddiff, accept = whoop$accept, r = whoop$r)
 
  whoop$argument
@@ -34,7 +34,7 @@
  whoop$converged
  ceiling(log10(max(abs(whoop$gradient))))
  length(whoop$r)
- data.frame(type = whoop$steptype, rho = round(whoop$rho, 2),
+ data.frame(type = whoop$steptype, # rho = round(whoop$rho, 2),
      change = whoop$preddiff, accept = whoop$accept, r = whoop$r)
 
  whoop$argument
