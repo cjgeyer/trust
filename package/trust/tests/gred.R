@@ -1,6 +1,8 @@
 
  library(trust)
 
+ options(digits = 3)
+
  ##### four-way contingency table with all two-way interactions
 
  d <- c(3, 4, 5, 6)

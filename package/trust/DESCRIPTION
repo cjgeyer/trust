@@ -1,10 +1,11 @@
 Package: trust
-Version: 0.1-6
-Date: 2014-03-29
+Version: 0.1-7
+Date: 2015-07-02
 Title: Trust Region Optimization
 Author: Charles J. Geyer <charlie@stat.umn.edu>.
 Maintainer: Charles J. Geyer <charlie@stat.umn.edu>
-Depends: R (>= 2.6.0)
+Depends: R (>= 2.10.0)
+Imports: stats
 ByteCompile: TRUE
 Description: Does local optimization using two derivatives and trust regions.
     Guaranteed to converge to local minimum of objective function.

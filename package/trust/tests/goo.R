@@ -18,6 +18,8 @@
 
  library(trust)
 
+ options(digits = 3)
+
  goo <- trust(objfun, c(3, 1), 1, 5, blather = TRUE, iterlim = 20)
  goo$converged
  length(goo$r)

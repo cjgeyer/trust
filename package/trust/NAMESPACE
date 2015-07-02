@@ -1,1 +1,2 @@
 export(trust)
+importFrom(stats, uniroot)

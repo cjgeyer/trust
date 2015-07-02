@@ -17,3 +17,5 @@
  0.1-5   vignettes directory
 
  0.1-6   changed LICENCE file as per CRAN instructions
+
+ 0.1-7   explicitly import stuff from stats, required for R-3.3.0

@@ -1,5 +1,6 @@
 
  library(trust)
+ options(digits = 3)
 
  d <- 5
  mu <- seq(1:d)

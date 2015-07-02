@@ -1,7 +1,7 @@
 
-R version 3.0.3 (2014-03-06) -- "Warm Puppy"
-Copyright (C) 2014 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+R Under development (unstable) (2015-06-30 r68608) -- "Unsuffered Consequences"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: i686-pc-linux-gnu (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -17,6 +17,8 @@ Type 'q()' to quit R.
 
 > 
 >  library(trust)
+> 
+>  options(digits = 3)
 > 
 >  ##### four-way contingency table with all two-way interactions
 > 
@@ -87,9 +89,6 @@ Type 'q()' to quit R.
 >  p <- exp(eta)
 >  p <- p / sum(p)
 >  x <- sample(nrow(m), n, replace = TRUE, prob = p)
-Warning message:
-In sample.int(x, size, replace, prob) :
-  Walker's alias method used: results are different from R < 2.2.0
 >  x <- tabulate(x, nbins = nrow(m))
 > 
 >  ##### save data
@@ -146,123 +145,111 @@ In sample.int(x, size, replace, prob) :
 [1] 100
 >  data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
 +      accept = fred$accept, r = fred$r)
-         type       rho     change accept        r
-1   easy-easy 0.9629598  -377.9983   TRUE 1.000000
-2   easy-easy 0.9508178  -974.5924   TRUE 2.000000
-3   easy-easy 0.9618299 -2173.9670   TRUE 4.000000
-4   easy-easy 0.9872496 -4381.3470   TRUE 8.000000
-5   easy-easy 0.9992885 -5041.1257   TRUE 9.273618
-6   easy-easy 0.9999380 -5040.1209   TRUE 9.273618
-7   easy-easy 0.9999897 -5040.2404   TRUE 9.273618
-8   easy-easy 0.9999975 -5040.2985   TRUE 9.273618
-9   easy-easy 0.9999993 -5040.3215   TRUE 9.273618
-10  easy-easy 0.9999997 -5040.3308   TRUE 9.273618
-11  easy-easy 0.9999999 -5040.3346   TRUE 9.273618
-12  easy-easy 1.0000000 -5040.3363   TRUE 9.273618
-13  easy-easy 1.0000000 -5040.3370   TRUE 9.273618
-14  easy-easy 1.0000000 -5040.3373   TRUE 9.273618
-15  easy-easy 1.0000000 -5040.3374   TRUE 9.273618
-16  easy-easy 1.0000000 -5040.3399   TRUE 9.273618
-17  easy-easy 1.0000000 -5040.3363   TRUE 9.273618
-18  easy-easy 1.0000000 -5040.3369   TRUE 9.273618
-19  easy-easy 1.0000000 -5040.3372   TRUE 9.273618
-20  easy-easy 1.0000000 -5040.3374   TRUE 9.273618
-21  easy-easy 1.0000000 -5040.3374   TRUE 9.273618
-22  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-23  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-24  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-25  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-26  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-27  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-28  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-29  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-30  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-31  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-32  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-33  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-34  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-35  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-36  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-37  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-38  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-39  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-40  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-41  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-42  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-43  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-44  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-45  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-46  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-47  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-48  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-49  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-50  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-51  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-52  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-53  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-54  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-55  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-56  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-57  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-58  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-59  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-60  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-61  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-62  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-63  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-64  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-65  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-66  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-67  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-68  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-69  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-70  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-71  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-72  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-73  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-74  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-75  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-76  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-77  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-78  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-79  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-80  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-81  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-82  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-83  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-84  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-85  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-86  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-87  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-88  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-89  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-90  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-91  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-92  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-93  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-94  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-95  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-96  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-97  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-98  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-99  easy-easy 1.0000000 -5040.3375   TRUE 9.273618
-100 easy-easy 1.0000000 -5040.3375   TRUE 9.273618
+         type   rho change accept    r
+1   easy-easy 0.963   -378   TRUE 1.00
+2   easy-easy 0.951   -975   TRUE 2.00
+3   easy-easy 0.962  -2174   TRUE 4.00
+4   easy-easy 0.987  -4381   TRUE 8.00
+5   easy-easy 0.999  -5041   TRUE 9.27
+6   easy-easy 1.000  -5040   TRUE 9.27
+7   easy-easy 1.000  -5040   TRUE 9.27
+8   easy-easy 1.000  -5040   TRUE 9.27
+9   easy-easy 1.000  -5040   TRUE 9.27
+10  easy-easy 1.000  -5040   TRUE 9.27
+11  easy-easy 1.000  -5040   TRUE 9.27
+12  easy-easy 1.000  -5040   TRUE 9.27
+13  easy-easy 1.000  -5040   TRUE 9.27
+14  easy-easy 1.000  -5040   TRUE 9.27
+15  easy-easy 1.000  -5040   TRUE 9.27
+16  easy-easy 1.000  -5040   TRUE 9.27
+17  easy-easy 1.000  -5040   TRUE 9.27
+18  easy-easy 1.000  -5040   TRUE 9.27
+19  easy-easy 1.000  -5040   TRUE 9.27
+20  easy-easy 1.000  -5040   TRUE 9.27
+21  easy-easy 1.000  -5040   TRUE 9.27
+22  easy-easy 1.000  -5040   TRUE 9.27
+23  easy-easy 1.000  -5040   TRUE 9.27
+24  easy-easy 1.000  -5040   TRUE 9.27
+25  easy-easy 1.000  -5040   TRUE 9.27
+26  easy-easy 1.000  -5040   TRUE 9.27
+27  easy-easy 1.000  -5040   TRUE 9.27
+28  easy-easy 1.000  -5040   TRUE 9.27
+29  easy-easy 1.000  -5040   TRUE 9.27
+30  easy-easy 1.000  -5040   TRUE 9.27
+31  easy-easy 1.000  -5040   TRUE 9.27
+32  easy-easy 1.000  -5040   TRUE 9.27
+33  easy-easy 1.000  -5040   TRUE 9.27
+34  easy-easy 1.000  -5040   TRUE 9.27
+35  easy-easy 1.000  -5040   TRUE 9.27
+36  easy-easy 1.000  -5040   TRUE 9.27
+37  easy-easy 1.000  -5040   TRUE 9.27
+38  easy-easy 1.000  -5040   TRUE 9.27
+39  easy-easy 1.000  -5040   TRUE 9.27
+40  easy-easy 1.000  -5040   TRUE 9.27
+41  easy-easy 1.000  -5040   TRUE 9.27
+42  easy-easy 1.000  -5040   TRUE 9.27
+43  easy-easy 1.000  -5040   TRUE 9.27
+44  easy-easy 1.000  -5040   TRUE 9.27
+45  easy-easy 1.000  -5040   TRUE 9.27
+46  easy-easy 1.000  -5040   TRUE 9.27
+47  easy-easy 1.000  -5040   TRUE 9.27
+48  easy-easy 1.000  -5040   TRUE 9.27
+49  easy-easy 1.000  -5040   TRUE 9.27
+50  easy-easy 1.000  -5040   TRUE 9.27
+51  easy-easy 1.000  -5040   TRUE 9.27
+52  easy-easy 1.000  -5040   TRUE 9.27
+53  easy-easy 1.000  -5040   TRUE 9.27
+54  easy-easy 1.000  -5040   TRUE 9.27
+55  easy-easy 1.000  -5040   TRUE 9.27
+56  easy-easy 1.000  -5040   TRUE 9.27
+57  easy-easy 1.000  -5040   TRUE 9.27
+58  easy-easy 1.000  -5040   TRUE 9.27
+59  easy-easy 1.000  -5040   TRUE 9.27
+60  easy-easy 1.000  -5040   TRUE 9.27
+61  easy-easy 1.000  -5040   TRUE 9.27
+62  easy-easy 1.000  -5040   TRUE 9.27
+63  easy-easy 1.000  -5040   TRUE 9.27
+64  easy-easy 1.000  -5040   TRUE 9.27
+65  easy-easy 1.000  -5040   TRUE 9.27
+66  easy-easy 1.000  -5040   TRUE 9.27
+67  easy-easy 1.000  -5040   TRUE 9.27
+68  easy-easy 1.000  -5040   TRUE 9.27
+69  easy-easy 1.000  -5040   TRUE 9.27
+70  easy-easy 1.000  -5040   TRUE 9.27
+71  easy-easy 1.000  -5040   TRUE 9.27
+72  easy-easy 1.000  -5040   TRUE 9.27
+73  easy-easy 1.000  -5040   TRUE 9.27
+74  easy-easy 1.000  -5040   TRUE 9.27
+75  easy-easy 1.000  -5040   TRUE 9.27
+76  easy-easy 1.000  -5040   TRUE 9.27
+77  easy-easy 1.000  -5040   TRUE 9.27
+78  easy-easy 1.000  -5040   TRUE 9.27
+79  easy-easy 1.000  -5040   TRUE 9.27
+80  easy-easy 1.000  -5040   TRUE 9.27
+81  easy-easy 1.000  -5040   TRUE 9.27
+82  easy-easy 1.000  -5040   TRUE 9.27
+83  easy-easy 1.000  -5040   TRUE 9.27
+84  easy-easy 1.000  -5040   TRUE 9.27
+85  easy-easy 1.000  -5040   TRUE 9.27
+86  easy-easy 1.000  -5040   TRUE 9.27
+87  easy-easy 1.000  -5040   TRUE 9.27
+88  easy-easy 1.000  -5040   TRUE 9.27
+89  easy-easy 1.000  -5040   TRUE 9.27
+90  easy-easy 1.000  -5040   TRUE 9.27
+91  easy-easy 1.000  -5040   TRUE 9.27
+92  easy-easy 1.000  -5040   TRUE 9.27
+93  easy-easy 1.000  -5040   TRUE 9.27
+94  easy-easy 1.000  -5040   TRUE 9.27
+95  easy-easy 1.000  -5040   TRUE 9.27
+96  easy-easy 1.000  -5040   TRUE 9.27
+97  easy-easy 1.000  -5040   TRUE 9.27
+98  easy-easy 1.000  -5040   TRUE 9.27
+99  easy-easy 1.000  -5040   TRUE 9.27
+100 easy-easy 1.000  -5040   TRUE 9.27
 >  (fred$stepnorm / fred$r)[fred$accept & fred$steptype != "Newton"]
-  [1] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
-  [8] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
- [15] 1.0000000 1.0000005 0.9999998 0.9999999 1.0000000 1.0000000 1.0000000
- [22] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
- [29] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
- [36] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
- [43] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
- [50] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
- [57] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
- [64] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
- [71] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
- [78] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
- [85] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
- [92] 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000
- [99] 1.0000000 1.0000000
+  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ [75] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 > 
 >  ##### note: FAILS to converge because function is unbounded below -- minimum
 >  #####     value does not exist
@@ -276,4 +263,4 @@ In sample.int(x, size, replace, prob) :
 > 
 > proc.time()
    user  system elapsed 
-  1.216   0.024   1.247 
+  2.608   0.088   2.691 
