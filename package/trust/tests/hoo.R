@@ -19,10 +19,10 @@
 
  whoop <- trust(objfun, rep(0, d), 1, 100, blather = TRUE)
  whoop$converged
- whoop$gradient
+ ceiling(log10(max(abs(whoop$gradient))))
  length(whoop$r)
- data.frame(type = whoop$steptype, rho = whoop$rho, change = whoop$preddiff,
-     accept = whoop$accept, r = whoop$r)
+ data.frame(type = whoop$steptype, rho = round(whoop$rho, 2),
+     change = whoop$preddiff, accept = whoop$accept, r = whoop$r)
 
  whoop$argument
  1 - sqrt(sum(whoop$argument^2))
@@ -32,10 +32,10 @@
 
  whoop <- trust(objfun, rep(0, d), 1, 100, blather = TRUE)
  whoop$converged
- whoop$gradient
+ ceiling(log10(max(abs(whoop$gradient))))
  length(whoop$r)
- data.frame(type = whoop$steptype, rho = whoop$rho, change = whoop$preddiff,
-     accept = whoop$accept, r = whoop$r)
+ data.frame(type = whoop$steptype, rho = round(whoop$rho, 2),
+     change = whoop$preddiff, accept = whoop$accept, r = whoop$r)
 
  whoop$argument
  1 - sqrt(sum(whoop$argument^2))
