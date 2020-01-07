@@ -1,7 +1,7 @@
 
-R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
-Copyright (C) 2015 The R Foundation for Statistical Computing
-Platform: i686-pc-linux-gnu (32-bit)
+R version 3.6.2 (2019-12-12) -- "Dark and Stormy Night"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -147,55 +147,27 @@ Type 'q()' to quit R.
 +      minimize = FALSE, blather = TRUE)
 >  fred$converged
 [1] TRUE
->  ceiling(log10(max(abs(fred$gradient))))
-[1] -13
->  length(fred$r)
-[1] 7
->  data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
-+      accept = fred$accept, r = fred$r)
-       type   rho   change accept r
-1 easy-easy 0.967 3.31e+02   TRUE 1
-2 easy-easy 0.717 2.59e+02   TRUE 2
-3 easy-easy 1.032 4.73e+01   TRUE 2
-4    Newton 0.994 4.46e+00   TRUE 4
-5    Newton 1.006 2.82e-02   TRUE 4
-6    Newton 1.000 2.80e-06   TRUE 4
-7    Newton 0.891 6.38e-14   TRUE 4
->  (fred$stepnorm / fred$r)[fred$accept & fred$steptype != "Newton"]
-[1] 1 1 1
-> 
+>  #### CRAN don't like: gives different results on different hardware
+>  #### or different compiler flags
+>  ## ceiling(log10(max(abs(fred$gradient))))
+>  ## length(fred$r)
+>  ## data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
+>  ##     accept = fred$accept, r = fred$r)
+>  ## (fred$stepnorm / fred$r)[fred$accept & fred$steptype != "Newton"]
 > 
 >  fred <- trust(objfun, rep(-5, length(theta.true)), 1, sqrt(ncol(m)),
 +      minimize = FALSE, blather = TRUE)
 >  fred$converged
 [1] TRUE
->  ceiling(log10(max(abs(fred$gradient))))
-[1] -13
->  length(fred$r)
-[1] 16
->  data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
-+      accept = fred$accept, r = fred$r)
-        type    rho   change accept    r
-1  easy-easy  1.000 5.43e+02   TRUE 1.00
-2  easy-easy  1.000 1.09e+03   TRUE 2.00
-3  easy-easy  1.000 2.17e+03   TRUE 4.00
-4  easy-easy  1.000 4.35e+03   TRUE 8.00
-5  easy-easy  0.999 5.04e+03   TRUE 9.27
-6  easy-easy  0.974 5.00e+03   TRUE 9.27
-7  easy-easy  0.601 3.85e+03   TRUE 9.27
-8  easy-easy  0.818 2.21e+03   TRUE 9.27
-9  easy-easy -1.516 6.53e+02  FALSE 9.27
-10 easy-easy  1.135 4.57e+02   TRUE 2.32
-11 easy-easy  0.937 2.33e+02   TRUE 4.64
-12    Newton  1.136 3.93e+01   TRUE 9.27
-13    Newton  1.060 2.69e+00   TRUE 9.27
-14    Newton  1.008 2.67e-02   TRUE 9.27
-15    Newton  1.000 3.94e-06   TRUE 9.27
-16    Newton  1.029 1.10e-13   TRUE 9.27
->  (fred$stepnorm / fred$r)[fred$accept & fred$steptype != "Newton"]
- [1] 1 1 1 1 1 1 1 1 1 1
+>  #### CRAN don't like: gives different results on different hardware
+>  #### or different compiler flags
+>  ## ceiling(log10(max(abs(fred$gradient))))
+>  ## length(fred$r)
+>  ## data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
+>  ##     accept = fred$accept, r = fred$r)
+>  ## (fred$stepnorm / fred$r)[fred$accept & fred$steptype != "Newton"]
 > 
 > 
 > proc.time()
    user  system elapsed 
-  1.292   0.056   1.342 
+  1.220   0.032   1.241 

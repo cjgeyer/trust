@@ -1,0 +1,15 @@
+# if version number has changed
+rm -f *.tar.gz
+
+# basic checking
+R CMD build trust
+R CMD check trust_*.tar.gz
+
+# build for CRAN submission
+R CMD build --compact-vignettes trust
+# this check must be done by R-devel before CRAN submission
+~/local/devel/bin/R CMD check --as-cran trust_*.tar.gz
+
+# look at files packed in tarball for any weird stuff
+tar ztvf trust_*.tar.gz | sed 's/^.*trust\///' | sort
+

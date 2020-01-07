@@ -126,19 +126,22 @@
  fred <- trust(objfun, rep(0, length(theta.true)), 1, sqrt(ncol(m)),
      minimize = FALSE, blather = TRUE)
  fred$converged
- ceiling(log10(max(abs(fred$gradient))))
- length(fred$r)
- data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
-     accept = fred$accept, r = fred$r)
- (fred$stepnorm / fred$r)[fred$accept & fred$steptype != "Newton"]
-
+ #### CRAN don't like: gives different results on different hardware
+ #### or different compiler flags
+ ## ceiling(log10(max(abs(fred$gradient))))
+ ## length(fred$r)
+ ## data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
+ ##     accept = fred$accept, r = fred$r)
+ ## (fred$stepnorm / fred$r)[fred$accept & fred$steptype != "Newton"]
 
  fred <- trust(objfun, rep(-5, length(theta.true)), 1, sqrt(ncol(m)),
      minimize = FALSE, blather = TRUE)
  fred$converged
- ceiling(log10(max(abs(fred$gradient))))
- length(fred$r)
- data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
-     accept = fred$accept, r = fred$r)
- (fred$stepnorm / fred$r)[fred$accept & fred$steptype != "Newton"]
+ #### CRAN don't like: gives different results on different hardware
+ #### or different compiler flags
+ ## ceiling(log10(max(abs(fred$gradient))))
+ ## length(fred$r)
+ ## data.frame(type = fred$steptype, rho = fred$rho, change = fred$preddiff,
+ ##     accept = fred$accept, r = fred$r)
+ ## (fred$stepnorm / fred$r)[fred$accept & fred$steptype != "Newton"]
 
