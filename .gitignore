@@ -9,3 +9,10 @@ symbols.rds
 *.tar.gz
 *.Rcheck
 *.Rout
+.RData
+Library
+Outputs
+PACKAGES
+PACKAGES.gz
+PACKAGES.rds
+timings.tab
